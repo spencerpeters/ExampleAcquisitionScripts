@@ -9,25 +9,29 @@ public class Main {
         System.out.println(info);
 
         try {
-            //core.loadDevice("XYStage", "Marzhauser", "EK-Mot 14 XY Stage");
-            core.loadDevice("Camera", "DSLRRemoteCamera", "CanonDSLRCam");
+            core.loadDevice("StagePort", "SerialManager", "COM4");
+            core.setProperty("StagePort", "StopBits", "2");
 
+            core.loadDevice("XYStage", "Marzhauser", "XYStage");
+            core.setProperty("XYStage", "Port", "StagePort");
+            printProperties(core, "XYStage");
             core.initializeAllDevices();
 
-            core.setCameraDevice("Camera");
+            core.setXYStageDevice("XYStage");
 
-            System.out.println(core.getTimeoutMs());
-            core.setTimeoutMs(20000);
-
-            printProperties(core, "Camera");
-
-//            core.setExposure(50);
-            core.snapImage();
-            core.getImage();
+            core.setRelativeXYPosition(1000, 1000);
+//            core.loadDevice("Camera", "DSLRRemoteCamera", "CanonDSLRCam");
 //
-//            if (core.getBytesPerPixel() == 3) {
+//            core.initializeAllDevices();
 //
-//            }
+//            core.setCameraDevice("Camera");
+//
+////            printProperties(core, "Camera");
+//
+////            core.setExposure(50);  // This line triggers an error because the camera's "Shutter Speeds" is not set
+//            core.snapImage();
+//            core.getImage();   // this returns an array, figure out the type
+
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
