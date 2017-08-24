@@ -9,26 +9,19 @@ public class Main {
         System.out.println(info);
 
         try {
-            core.loadDevice("StagePort", "SerialManager", "COM4");
-            core.setProperty("StagePort", "StopBits", "2");
+            loadMarzhauserStage(core);
+//            loadCanonCamera(core);
 
-            core.loadDevice("XYStage", "Marzhauser", "XYStage");
-            core.setProperty("XYStage", "Port", "StagePort");
-            printProperties(core, "XYStage");
             core.initializeAllDevices();
 
+            printProperties(core, "XYStage");
+//            printProperties(core, "Camera");
+
             core.setXYStageDevice("XYStage");
+//            core.setCameraDevice("Camera");
 
             core.setRelativeXYPosition(1000, 1000);
-//            core.loadDevice("Camera", "DSLRRemoteCamera", "CanonDSLRCam");
-//
-//            core.initializeAllDevices();
-//
-//            core.setCameraDevice("Camera");
-//
-////            printProperties(core, "Camera");
-//
-////            core.setExposure(50);  // This line triggers an error because the camera's "Shutter Speeds" is not set
+
 //            core.snapImage();
 //            core.getImage();   // this returns an array, figure out the type
 
@@ -38,6 +31,18 @@ public class Main {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    public static void loadCanonCamera(CMMCore core) throws Exception {
+        core.loadDevice("Camera", "DSLRRemoteCamera", "CanonDSLRCam");
+    }
+
+    public static void loadMarzhauserStage(CMMCore core) throws Exception {
+        core.loadDevice("StagePort", "SerialManager", "COM4");
+        core.setProperty("StagePort", "StopBits", "2");
+
+        core.loadDevice("XYStage", "Marzhauser", "XYStage");
+        core.setProperty("XYStage", "Port", "StagePort");
     }
 
     public static void printProperties(mmcorej.CMMCore core, String deviceLabel) throws Exception {
