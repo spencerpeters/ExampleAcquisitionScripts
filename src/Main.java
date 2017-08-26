@@ -92,15 +92,6 @@ public class Main {
         core.waitForDevice(stageLabel);
     }
 
-    public static void setLimitSwitches(CMMCore core, String stageSerialPortLabel, String stageLabel) throws Exception{
-        String lowerLimit = "0.0";
-        String upperLimit = "29000.0";
-        core.setSerialPortCommand(stageSerialPortLabel, "!lim y" + " " + lowerLimit + " " + upperLimit, "\r");
-        // This is worthless, does absolutely 0
-        // in fact, no, it appears to UNDO the setting of the limit switches in Switchboard, what the freaking hell
-        core.waitForDevice(stageLabel);
-    }
-
     public static void loadCanonCamera(CMMCore core) throws Exception {
         core.loadDevice("Camera", "DSLRRemoteCamera", "CanonDSLRCam");
     }
